@@ -2,26 +2,19 @@
   Example
 */
 const Bridge = artifacts.require('Bridge')
-const DefaultToken = artifacts.require('DefaultToken')
 
 module.exports = async (deployer) => {
 
   /*
     Setup these parameters before deploy
   */
-  const name = ""
-  const symbol = ""
-  const decimals = 0
   const minimalGoal = 1
   const hardCap = 1
+  const tokenAddress = "0x2A22e5cCA00a3D63308fa39f29202eB1b39eEf52"
 
-  await deployer.deploy(DefaultToken, name, symbol, decimals)
-
-  let token = await DefaultToken.deployed()
-
-  if (minimalGoal == 0 || hardCap == 0 || token.address == 'undefined') {
+  if (minimalGoal == 0 || hardCap == 0) {
     throw new Error('Cannot deploy contract with empty arguments.')
   }
 
-  await deployer.deploy(Bridge, minimalGoal, hardCap, token.address)
+  await deployer.deploy(Bridge, minimalGoal, hardCap, tokenAddress)
 }

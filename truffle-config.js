@@ -1,4 +1,24 @@
+const HDWalletProvider = require("truffle-hdwallet-provider-privkey");
+const LedgerWalletProvider = require("truffle-ledger-provider");
+const infuraApiKey = process.env.INFURA_APIKEY;
+
+
+var ledgerOptions = {
+    networkId: 1,
+    accountsOffset: 0
+};
+
+
 module.exports = {
-  // See <http://truffleframework.com/docs/advanced/configuration>
-  // to customize your Truffle configuration!
+  networks: {
+    mainnet: {
+      provider: new LedgerWalletProvider(
+        ledgerOptions,
+        "https://mainnet.infura.io/" + infuraApiKey
+      ),
+      network_id: ledgerOptions.networkId,
+      gas: 3500000,
+      gasPrice: 10000000000
+    },
+  }
 };
